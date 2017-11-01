@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Html exposing (Html, Attribute, text, div, h1, p, input, button)
+import Html exposing (Html, Attribute, text, div, h1, input, button)
 import Html.Attributes exposing (type_, style, value)
 import Html.Events exposing (onClick, onInput)
 import Random
@@ -68,12 +68,20 @@ update msg model =
 ---- VIEW ----
 
 
+fullHeight : Attribute Msg
+fullHeight =
+    style
+        [ ( "height", "100vh" )
+        ]
+
+
 columnFlex : Attribute Msg
 columnFlex =
     style
         [ ( "display", "flex" )
         , ( "flex-direction", "column" )
         , ( "align-items", "center" )
+        , ( "justify-content", "center" )
         ]
 
 
@@ -87,11 +95,12 @@ rowFlex =
 
 view : Model -> Html Msg
 view model =
-    div [ columnFlex ]
-        [ h1 [] [ text "shuffle string" ]
-        , input [ type_ "text", onInput NewString, value model.string ] []
-        , p [] [ text model.shuffledString ]
-        , button [ onClick Shuffle ] [ text "shuffle" ]
+    div [ columnFlex, fullHeight ]
+        [ h1 [] [ text model.shuffledString ]
+        , div [ rowFlex ]
+            [ input [ type_ "text", onInput NewString, value model.string ] []
+            , button [ onClick Shuffle ] [ text "shuffle" ]
+            ]
         ]
 
 
