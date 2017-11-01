@@ -68,15 +68,23 @@ update msg model =
 ---- VIEW ----
 
 
-fullHeight : Attribute Msg
-fullHeight =
-    style
-        [ ( "height", "100vh" )
-        ]
+topLevelStyle : Attribute Msg
+topLevelStyle =
+    style [ ( "height", "100%" ) ]
 
 
-columnFlex : Attribute Msg
-columnFlex =
+fontStyleLarge : Attribute Msg
+fontStyleLarge =
+    style [ ( "font-size", "6vw" ) ]
+
+
+fontStyleMedium : Attribute Msg
+fontStyleMedium =
+    style [ ( "font-size", "4vw" ) ]
+
+
+flex : Attribute Msg
+flex =
     style
         [ ( "display", "flex" )
         , ( "flex-direction", "column" )
@@ -85,22 +93,23 @@ columnFlex =
         ]
 
 
-rowFlex : Attribute Msg
-rowFlex =
+margin : Attribute Msg
+margin =
     style
-        [ ( "display", "flex" )
-        , ( "flex-direction", "row" )
-        ]
+        [ ( "margin", "10px 0" ) ]
+
+
+fitWidth : Attribute Msg
+fitWidth =
+    style [ ( "width", "100%" ) ]
 
 
 view : Model -> Html Msg
 view model =
-    div [ columnFlex, fullHeight ]
-        [ h1 [] [ text model.shuffledString ]
-        , div [ rowFlex ]
-            [ input [ type_ "text", onInput NewString, value model.string ] []
-            , button [ onClick Shuffle ] [ text "shuffle" ]
-            ]
+    div [ flex, topLevelStyle, fitWidth ]
+        [ h1 [ margin, fontStyleLarge ] [ text model.shuffledString ]
+        , input [ margin, fontStyleMedium, type_ "text", onInput NewString, value model.string ] []
+        , button [ margin, fontStyleMedium, onClick Shuffle ] [ text "shuffle" ]
         ]
 
 
